@@ -1,4 +1,4 @@
-import { Place } from '../types/Place';
+import { Place } from '../types/place';
 
 export type Item = {
 	id: number;

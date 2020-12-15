@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Card from '../components/card';
 import { getItems, Item } from '../lib/get-items';
-import { Place } from '../types/Place';
+import { Place } from '../types/place';
 
 export default function Home() {
 	const [items, setItems] = useState<Item[]>([]);
