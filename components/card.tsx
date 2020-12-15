@@ -8,16 +8,19 @@ export default function Card({ item }: { item: Item }) {
 				{`
         .card-container {
           display: inline-block;
+          width: 180px;
+          height: 80px;
           margin: 10px;
           border: solid 1px black;
           border-radius: 8px;
+          text-align: center;
         }
 
         .card-content {
-          width: 180px;
-          height: 80px;
-          text-align: center;
+          display: table-cell;
           vertical-align: middle;
+          width: inherit;
+          height: inherit
         }
       `}
 			</style>
