@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CSSTransitionGroup, TransitionGroup } from 'react-transition-group';
 import Card from '../components/card';
 import { getItems, Item } from '../lib/get-items';
 import { Place } from '../types/place';
@@ -37,9 +38,18 @@ export default function Home() {
 				/>
 			</div>
 			<div className="items-container">
-				{items.map((item, idx) => (
-					<Card key={`${item.id}${idx}`} item={item} />
-				))}
+				<CSSTransitionGroup
+					transitionName="example"
+					transitionAppear={true}
+					transitionLeave={false}
+					transitionEnter={true}
+					transitionAppearTimeout={500}
+					transitionEnterTimeout={500}
+				>
+					{items.map((item, idx) => (
+						<Card key={`${item.id}${idx}`} item={item} idx={idx} />
+					))}
+				</CSSTransitionGroup>
 			</div>
 
 			<style>{`
@@ -59,7 +69,16 @@ export default function Home() {
             back-ground-color: cornsilk;
             width: 1214px;
             margin: 20px;
-          }
+		  }
+
+		  .example-enter {
+			opacity: 0.01;
+		  }
+
+		  .example-enter.example-enter-active {
+			opacity: 1;
+			transition: opacity 500ms ease-in;
+		  }
         `}</style>
 		</div>
 	);

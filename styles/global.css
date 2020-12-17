@@ -1,0 +1,10 @@
+@-webkit-keyframes example {
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes example {
+	100% {
+		opacity: 1;
+	}
+}

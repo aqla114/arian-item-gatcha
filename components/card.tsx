@@ -1,6 +1,7 @@
 import { Item } from '../lib/get-items';
 
-export default function Card({ item }: { item: Item }) {
+export default function Card({ item, idx }: { item: Item; idx: number }) {
+	console.log(idx);
 	return (
 		<div className="card-container">
 			<div className="card-content">{item.name}</div>
