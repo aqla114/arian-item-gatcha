@@ -1,10 +1,26 @@
+import { GetStaticProps } from 'next';
 import React, { useState } from 'react';
-import { CSSTransitionGroup, TransitionGroup } from 'react-transition-group';
+import { CSSTransitionGroup } from 'react-transition-group';
 import Card from '../components/card';
 import { getItems, Item } from '../lib/get-items';
+import { loadRecipes } from '../lib/load-recipes';
 import { Place } from '../types/place';
+import { Recipe } from '../types/recipe';
 
-export default function Home() {
+type Props = {
+	recipes: Recipe[];
+};
+
+export const getStaticProps: GetStaticProps<Props> = async () => {
+	const recipes = loadRecipes();
+	return {
+		props: {
+			recipes,
+		},
+	};
+};
+
+export default function Home({ recipes }: Props) {
 	const [items, setItems] = useState<Item[]>([]);
 	const [currentPlace, setCurrentPlace] = useState<Place>('Farm');
 	const [diceCount, setDiceCount] = useState<number>(1);
