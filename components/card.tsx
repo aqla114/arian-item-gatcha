@@ -1,7 +1,6 @@
-import { Item } from '../lib/get-items';
+import { Recipe } from '../types/recipe';
 
-export default function Card({ item, idx }: { item: Item; idx: number }) {
-	console.log(idx);
+export default function Card({ item, idx }: { item: Recipe; idx: number }) {
 	return (
 		<div className="card-container">
 			<div className="card-content">{item.name}</div>
