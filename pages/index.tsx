@@ -50,7 +50,7 @@ export default function Home({ ingridients, env }: Props) {
 	const [knownIds, setKnownIds] = useState<number[]>([]);
 
 	useEffect(() => {
-		fetch(`https://${env.HOST_NAME}/api/item-pool`, {
+		fetch(`/api/item-pool`, {
 			method: 'GET',
 		})
 			.then(async (res) => {
@@ -98,7 +98,7 @@ export default function Home({ ingridients, env }: Props) {
 								  )
 								: getItems(ingridients[currentPlace], diceCount);
 
-						fetch(`https://${env.HOST_NAME}/api/item-pool`, {
+						fetch(`/api/item-pool`, {
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
 							body: JSON.stringify({ ids: items.map((x) => x.id) }),
