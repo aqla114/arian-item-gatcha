@@ -1,14 +1,17 @@
 import { GetStaticProps } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CSSTransitionGroup } from 'react-transition-group';
 import Card from '../components/card';
 import { getItems } from '../lib/get-items';
+import { getRecipes } from '../lib/get-recipes';
 import { loadRecipes } from '../lib/load-recipes';
 import { Place } from '../types/place';
 import { Recipe } from '../types/recipe';
 
 type Props = {
-	recipes: Recipe[];
+	env: {
+		HOST_NAME: string;
+	};
 	ingridients: { [k in Place]: Recipe[] };
 };
 
@@ -23,22 +26,40 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 		Pond: ingridients.filter((x) => x.getWay.includes('いけす')),
 		Cave: ingridients.filter((x) => x.getWay.includes('洞窟')),
 		Forest: ingridients.filter((x) => x.getWay.includes('旧校舎裏の林')),
+		Library: recipes,
 	};
 
 	console.log(ingridientsProps);
 
+	console.log(process.env);
+
 	return {
 		props: {
-			recipes,
+			env: {
+				HOST_NAME: process.env.HOST_NAME || '',
+			},
 			ingridients: ingridientsProps,
 		},
 	};
 };
 
-export default function Home({ recipes, ingridients }: Props) {
+export default function Home({ ingridients, env }: Props) {
 	const [items, setItems] = useState<Recipe[]>([]);
-	const [currentPlace, setCurrentPlace] = useState<Place>('Farm');
+	const [currentPlace, setCurrentPlace] = useState<Place | 'Library'>('Farm');
 	const [diceCount, setDiceCount] = useState<number>(1);
+	const [knownIds, setKnownIds] = useState<number[]>([]);
+
+	useEffect(() => {
+		fetch(`http://${env.HOST_NAME}/api/item-pool`, {
+			method: 'GET',
+		})
+			.then(async (res) => {
+				const resIds: number[] = (await res.json())['ids'];
+				console.log(resIds);
+				setKnownIds(resIds);
+			})
+			.catch((e) => console.log(e));
+	}, []);
 
 	return (
 		<div className="container">
@@ -51,6 +72,7 @@ export default function Home({ recipes, ingridients }: Props) {
 					<option value="Pond">いけす</option>
 					<option value="Cave">洞窟</option>
 					<option value="Forest">旧校舎裏の林</option>
+					<option value="Library">図書館</option>
 				</select>
 				<select
 					className="gatcha-dice-count-selector"
@@ -65,9 +87,30 @@ export default function Home({ recipes, ingridients }: Props) {
 					type="button"
 					className="gatcha-button"
 					value="回す"
-					onClick={() =>
-						setItems(getItems(ingridients[currentPlace], diceCount))
-					}
+					onClick={() => {
+						const items =
+							currentPlace === 'Library'
+								? getRecipes(
+										ingridients[currentPlace].filter(
+											(x) => !knownIds.includes(x.id)
+										),
+										diceCount
+								  )
+								: getItems(ingridients[currentPlace], diceCount);
+
+						fetch(`http://${env.HOST_NAME}/api/item-pool`, {
+							method: 'POST',
+							headers: { 'Content-Type': 'application/json' },
+							body: JSON.stringify({ ids: items.map((x) => x.id) }),
+						})
+							.then(async (res) => {
+								const resIds: number[] = (await res.json())['ids'];
+								console.log('Response known ids', resIds);
+								setKnownIds(resIds);
+								setItems(items);
+							})
+							.catch((e) => console.log(e));
+					}}
 				/>
 			</div>
 			<div className="items-container">
