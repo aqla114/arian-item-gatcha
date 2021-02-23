@@ -14,6 +14,7 @@ export function loadRecipes() {
 		'ingridients',
 		'tools',
 		'getWay',
+		'price',
 		'detail',
 	]);
 

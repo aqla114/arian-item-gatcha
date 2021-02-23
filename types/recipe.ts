@@ -4,5 +4,6 @@ export type Recipe = {
 	ingridients: string;
 	tools: string;
 	getWay: string;
+	price: number;
 	detail: string;
 };
