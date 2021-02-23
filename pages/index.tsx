@@ -82,6 +82,13 @@ export default function Home({ ingridients, env }: Props) {
 					<option value={2}>2D6</option>
 					<option value={3}>3D6</option>
 					<option value={4}>4D6</option>
+					<option value={5}>5D6</option>
+					<option value={6}>6D6</option>
+					<option value={7}>7D6</option>
+					<option value={8}>8D6</option>
+					<option value={9}>9D6</option>
+					<option value={10}>10D6</option>
+					<option value={100}>100D6</option>
 				</select>
 				<input
 					type="button"
