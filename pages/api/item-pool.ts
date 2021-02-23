@@ -15,14 +15,17 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 	} else if (req.method === 'POST') {
 		try {
 			const itemIds = req.body['ids'];
+			const currentPlace = req.body['currentPlace'];
 			if (!isNumberList(itemIds)) {
 				res.status(400);
 				return;
 			}
 
-			itemIds.forEach((x) => currentItemIds.add(x));
+			if (currentPlace === 'Library') {
+				itemIds.forEach((x) => currentItemIds.add(x));
 
-			console.log(itemIds, 'pushed', currentItemIds);
+				console.log(itemIds, 'pushed', currentItemIds);
+			}
 
 			res.setHeader('Content-Type', 'application/json');
 			res.status(200).json({ ids: Array.from(currentItemIds) });

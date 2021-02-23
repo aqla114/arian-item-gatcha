@@ -101,7 +101,10 @@ export default function Home({ ingridients, env }: Props) {
 						fetch(`/api/item-pool`, {
 							method: 'POST',
 							headers: { 'Content-Type': 'application/json' },
-							body: JSON.stringify({ ids: items.map((x) => x.id) }),
+							body: JSON.stringify({
+								ids: items.map((x) => x.id),
+								currentPlace,
+							}),
 						})
 							.then(async (res) => {
 								const resIds: number[] = (await res.json())['ids'];
