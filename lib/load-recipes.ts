@@ -16,6 +16,7 @@ export function loadRecipes() {
 		'getWay',
 		'price',
 		'detail',
+		'dropRate',
 	]);
 
 	return parsedCsv.map((x) => ({ ...x, id: parseInt(x.id.toString()) }));

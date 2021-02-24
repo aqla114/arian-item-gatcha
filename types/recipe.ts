@@ -6,4 +6,5 @@ export type Recipe = {
 	getWay: string;
 	price: number;
 	detail: string;
+	dropRate: number;
 };
