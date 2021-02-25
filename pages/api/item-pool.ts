@@ -8,7 +8,7 @@ export function isNumberList(x: unknown): x is number[] {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-	console.log(req);
+	// console.log(req);
 	if (req.method === 'GET') {
 		res.setHeader('Content-Type', 'application/json');
 		res.status(200).json({ ids: Array.from(currentItemIds) });

@@ -19,5 +19,9 @@ export function loadRecipes() {
 		'dropRate',
 	]);
 
-	return parsedCsv.map((x) => ({ ...x, id: parseInt(x.id.toString()) }));
+	return parsedCsv.map((x) => ({
+		...x,
+		id: parseInt(x.id.toString()),
+		dropRate: parseInt(x.dropRate.toString()),
+	}));
 }
