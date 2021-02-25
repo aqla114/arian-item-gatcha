@@ -12,8 +12,26 @@ export function getSumOfDice(diceCount: number): number {
 }
 
 // 0..max
-export function getRandomValues(length: number, max: number): number[] {
-	return [...new Array(length)].map((_) => Math.floor(Math.random() * max));
+export function getRandomValues(
+	length: number,
+	max: number,
+	weight?: number[]
+): number[] {
+	if (weight !== undefined) {
+		// weight = [2, 5, 1] みたいなのが与えられた時に、[0, 0, 1, 1, 1, 1, 1, 2] を作る。
+		const indices = weight.map((w, idx) => new Array(w).fill(idx)).flat();
+
+		console.log(weight);
+
+		// indices[indices'] みたいな話。ややこい。
+		const res = [...new Array(length)]
+			.map((_) => Math.floor(Math.random() * indices.length))
+			.map((idx) => indices[idx]);
+
+		return res;
+	} else {
+		return [...new Array(length)].map((_) => Math.floor(Math.random() * max));
+	}
 }
 
 // 0..max
