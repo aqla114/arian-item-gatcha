@@ -1,3 +1,4 @@
+import { calcRare } from '../lib/calclurate-rare';
 import { Recipe } from '../types/recipe';
 
 export default function Card({ item, idx }: { item: Recipe; idx: number }) {
@@ -5,6 +6,9 @@ export default function Card({ item, idx }: { item: Recipe; idx: number }) {
 		<div className="card-container">
 			<div className="card-content">
 				<span className="card-content__id">{item.id}</span>
+				<span className="card-content__rare">
+					{'★'.repeat(calcRare(item.dropRate))}
+				</span>
 				<br />
 				<span className="card-content__name">{item.name}</span>
 			</div>
@@ -28,6 +32,10 @@ export default function Card({ item, idx }: { item: Recipe; idx: number }) {
         }
 
         .card-content__id {
+          font-size: 12px;
+        }
+
+        .card-content__rare {
           font-size: 12px;
         }
       `}
