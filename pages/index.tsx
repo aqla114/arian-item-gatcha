@@ -63,6 +63,9 @@ export default function Home({ ingridients, env }: Props) {
 
 	return (
 		<div className="container">
+			<div className="discription">
+				※ガチャの提供割合は予告なく変更となる場合があります。
+			</div>
 			<div className="gatcha">
 				<select
 					className="gatcha-type-selector"
