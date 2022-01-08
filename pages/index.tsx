@@ -27,6 +27,7 @@ export const getStaticProps: GetStaticProps<Props> = async () => {
 		Cave: ingridients.filter((x) => x.getWay.includes('洞窟')),
 		Forest: ingridients.filter((x) => x.getWay.includes('旧校舎裏の林')),
 		Library: recipes,
+		Pickup2022: recipes.filter((x) => x.getWay.includes('ガチャ')),
 	};
 
 	console.log(ingridientsProps);
@@ -76,6 +77,7 @@ export default function Home({ ingridients, env }: Props) {
 					<option value="Cave">洞窟</option>
 					<option value="Forest">旧校舎裏の林</option>
 					<option value="Library">図書館</option>
+					<option value="Pickup2022">???</option>
 				</select>
 				<select
 					className="gatcha-dice-count-selector"
